@@ -5,3 +5,6 @@ from .models import *
 # Create your views here.
 class WorkList(ListView):
     model = works
+
+class UpdateoptionList(ListView):
+    model = updateoption
