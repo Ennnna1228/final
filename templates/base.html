@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<head>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    <div class = "container">
+        <div>
+            {% if not user.is_authenticated %}
+            <a href = "{% url 'login' %}">登入</a>
+            {% else %}
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                {{user}}
+                <input type = "submit" value="登出">
+            </form>
+            {% endif %}
+        </div>
+    {% block main %}{% endblock %}
+    <div>陳昕璞製作</div>
+    </div>
+</body>
+</html>
