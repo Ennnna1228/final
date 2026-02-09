@@ -29,4 +29,4 @@ class classes(models.Model):
 
 
     def __str__(self): 
-        return "{}-{}-{}".format(self.course_name,self.teacher,self.course_date)
+        return "{}-{}-{}-{}".format(self.course_name,self.teacher,self.course_startdate,self.course_enddate)
