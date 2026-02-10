@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 class works(models.Model):
@@ -30,3 +31,14 @@ class classes(models.Model):
 
     def __str__(self): 
         return "{}-{}-{}-{}".format(self.course_name,self.teacher,self.course_startdate,self.course_enddate)
+    
+class User(AbstractUser):
+    
+    ROLE_CHOICES = (
+        ('teacher', '老師'),
+        ('student', '學生'),
+    )
+    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='student')
+
+    def __str__(self):
+        return f"{self.username} ({self.get_role_display()})"

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title%}{{ updateoption.topic }}的學習歷程{% endblock %}
+
+{% block main %}
+<h1>{{ updateoption.topic }}</h1>
+    <p>{{ updateoption.introduce }}</p>
+    <u1>
+        {% for works in work_list %}
+        <li>{{ works.title }}-{{ works.created_date }}</li>
+
+           
+        {% endfor %}
+    </u1>
+{% endblock %}

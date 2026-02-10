@@ -1,2 +1,15 @@
+
 {% extends "base.html" %}
+
 {% block title%}主頁{% endblock %}
+
+{% block main %}
+
+<h1>學習歷程檔案櫃</h1>
+<ul>
+    {% for updateoption in updateoption_list %}
+    <li> {{ updateoption.topic }}-{{ updateoption.amount }} </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
