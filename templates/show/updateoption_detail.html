@@ -7,8 +7,7 @@
     <u1>
         {% for works in work_list %}
         <li>{{ works.title }}-{{ works.created_date }}</li>
-
-           
         {% endfor %}
+        <a href="{%url 'work_create' updateoption.id %}">新增</a>
     </u1>
 {% endblock %}

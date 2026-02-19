@@ -1,5 +1,22 @@
 {% extends "base.html" %}
 {% block title%}新增學習歷程{% endblock %}
-
 {% block main %}
+    <form action="" method="post">
+       {% for field in form %}
+        {% if field.name == "title" or field.name == "desc" or field.name == "jpg" %}
+            {{ field.label_tag }}<br>
+            {{ field }}<br><br>
+        {% endif %}
+        {% if view.kwargs.pk == 3 %}
+            {% if field.name == "classes_id" or field.name == "Certification" %}
+                {{ field.label_tag }}<br>
+                {{ field }}<br><br>
+            {% endif %}
+        {% endif %}
+        {% for error in field.errors %}
+            <p style="color: red;">{{ error }}</p>
+        {% endfor %}
+        {% endfor %}
+        <input type="submit" value="新增"> 
+    </form>
 {% endblock %}

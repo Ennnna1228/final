@@ -20,6 +20,7 @@ class WorkCreate(CreateView):
     model = works
     fields = '__all__'
     success_url = reverse_lazy('work_list')
+    works.topic_id = ['pk']
 
 class UpdateoptionView(DetailView):
     model = updateoption

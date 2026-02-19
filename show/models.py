@@ -6,7 +6,7 @@ class works(models.Model):
     title = models.CharField("學習歷程檔案名稱",max_length=15)#標題
     desc = models.TextField("說明")#說明文
     jpg = models.FileField(upload_to='jpg/',null=True, blank=True)#上傳檔案
-    classes_id = models.IntegerField("課程編號編號")#任課
+    classes_id = models.IntegerField("課程編號編號",null=True, blank=True)#任課
     created_date = models.DateField("建立日期",auto_now_add = True)#自動填寫時間
     Certification = models.BooleanField("是否需要認證",default = False)#認證 T?F?
     topic_id = models.IntegerField("上傳區域編號")#屬於哪個主題
