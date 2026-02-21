@@ -1,7 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404
 from django.views.generic import ListView,CreateView,DetailView
 from .models import *
-from django.urls import reverse_lazy
+from .urls import *
+from django.urls import reverse_lazy,reverse
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 
@@ -18,17 +19,34 @@ class ClassesList(ListView):
 
 class WorkCreate(CreateView):
     model = works
-    fields = '__all__'
-    success_url = reverse_lazy('work_list')
-    works.topic_id = ['pk']
+    fields = ['title', 'desc', 'jpg', 'classes_id', 'Certification']
 
+    def get_success_url(self):
+        return reverse('updateoption_list')
+    
+    def form_valid(self, form):
+        pk_from_url = self.kwargs.get('pk')
+        form.instance.topic_id = pk_from_url
+        option = get_object_or_404(updateoption, id=pk_from_url)
+        option.amount += 1
+        option.save()
+        return super().form_valid(form)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        pk_from_url = self.kwargs.get('pk')
+        target_option = get_object_or_404(updateoption, id=pk_from_url)
+        context['target_option'] = target_option
+        context['all_classes'] = classes.objects.all()
+        return context
+    
 class UpdateoptionView(DetailView):
     model = updateoption
 
     def get_context_data(self, **kwargs):
 
         ctx = super().get_context_data(**kwargs)
-        ctx['work_list'] = works.objects.filter(topic_id = self.object.id)
+        ctx['updateoption_list'] = works.objects.filter(topic_id = self.object.id)
         return ctx 
 
 class CustomUserCreationForm(UserCreationForm):

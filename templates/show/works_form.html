@@ -2,21 +2,36 @@
 {% block title%}新增學習歷程{% endblock %}
 {% block main %}
     <form action="" method="post">
-       {% for field in form %}
+        {% csrf_token %}
+        {% for field in form %}
         {% if field.name == "title" or field.name == "desc" or field.name == "jpg" %}
             {{ field.label_tag }}<br>
-            {{ field }}<br><br>
+            {{ field }}<br>
+            {% for error in field.errors %}
+                <p style="color: red;">{{ error }}</p>
+            {% endfor %}<br>
         {% endif %}
         {% if view.kwargs.pk == 3 %}
             {% if field.name == "classes_id" or field.name == "Certification" %}
-                {{ field.label_tag }}<br>
-                {{ field }}<br><br>
+                {{ field }}<br>
+                {% for error in field.errors %}
+                    <p style="color: red;">{{ error }}</p>
+                {% endfor %}<br>
             {% endif %}
         {% endif %}
-        {% for error in field.errors %}
-            <p style="color: red;">{{ error }}</p>
         {% endfor %}
-        {% endfor %}
+    <li>課程參考資訊</li>
+        <ul>
+            {% for course in all_classes %}
+                <li>
+                    課程代碼：{{ course.id }}<br>
+                    課程名稱：{{ course.course_name }}<br>
+                    授課老師：{{ course.teacher }}<br>
+                </li>
+            {% empty %}
+                <li>目前無課程資料</li>
+            {% endfor %}
+        </ul>
         <input type="submit" value="新增"> 
     </form>
 {% endblock %}

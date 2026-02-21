@@ -8,7 +8,7 @@
 <h1>學習歷程檔案櫃</h1>
 <ul>
     {% for updateoption in updateoption_list %}
-    <li> {{ updateoption.topic }}-{{ updateoption.amount }} </li>
+    <a href="{% url 'updateoption_view' updateoption.id %}"> {{ updateoption.topic }}-{{ updateoption.amount }}<br> </a>
     {% endfor %}
 </ul>
 
