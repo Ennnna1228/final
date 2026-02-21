@@ -11,5 +11,7 @@
     <a href="{% url 'updateoption_view' updateoption.id %}"> {{ updateoption.topic }}-{{ updateoption.amount }}<br> </a>
     {% endfor %}
 </ul>
-
+{% if user.is_staff %}
+<a href = "{% url 'teacher_audit_list' %}">待認證檔案區</a>
+{% endif %}
 {% endblock %}

@@ -3,7 +3,7 @@
 {% block title%}認證頁面{% endblock %}
 
 {% block main %}
-<h2>審核學生作品：{{ object.title }}</h2>
+<li>審核學生作品：{{ object.title }}</li>
 <div style="border: 1px solid #ddd; padding: 15px;">
     <p>學生說明：{{ object.desc }}</p>
     {% if object.jpg %}<img src="{{ object.jpg.url }}" width="200">{% endif %}

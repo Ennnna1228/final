@@ -7,25 +7,24 @@
     <u1>
         {% for works in updateoption_list %}
         <li>{{ works.title }}-{{ works.created_date }}</li>
-        {% endfor %}
-        {% for work in student_works %}
-    <div class="work-card">
-        <h4>{{ work.title }}</h4>
-        
-        {% if work.Certification %}
-            {% if work.audit_status == 'pending' %}
-                <span style="color: gray;">⌛ 老師審核中</span>
-            {% elif work.audit_status == 'pass' %}
-                <span style="color: green;">✅ 認證通過</span>
-            {% elif work.audit_status == 'fail' %}
-                <span style="color: red;">❌ 認證未通過</span>
-                <p>老師回覆：{{ work.teacher_comment }}</p>
+        <div class="work-card">
+            {% if work.Certification %}
+                {% if work.audit_status == 'pending' %}
+                    <span style="color: gray;">老師審核中</span>
+                {% elif work.audit_status == 'pass' %}
+                    <span style="color: green;">認證通過</span>
+                {% elif work.audit_status == 'fail' %}
+                    <span style="color: red;">認證未通過</span>
+                    <p>老師回覆：{{ work.teacher_comment }}</p>
+                {% endif %}
+            {% else %}
+                <span>未申請認證</span>
             {% endif %}
-        {% else %}
-            <span>未申請認證</span>
-        {% endif %}
-    </div>
-    {% endfor %}
+        {% endfor %}
+        </div>
+    {% if not user.is_staff and not user.is_superuser and user.is_authenticated %}
         <a href="{%url 'work_create' updateoption.id %}">新增</a>
     </u1>
+    {% endif %}
+    <a href="{% url 'updateoption_list' %}">回主頁</a>
 {% endblock %}

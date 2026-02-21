@@ -41,10 +41,11 @@ class UpdateoptionView(DetailView):
     model = updateoption
 
     def get_context_data(self, **kwargs):
-
-        ctx = super().get_context_data(**kwargs)
-        ctx['updateoption_list'] = works.objects.filter(topic_id = self.object.id)
-        return ctx 
+        context = super().get_context_data(**kwargs)
+        student_works_data = works.objects.filter(topic_id=self.object.id)
+        context['student_works'] = student_works_data
+        context['updateoption_list'] = student_works_data 
+        return context
 
 class CustomUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
@@ -76,7 +77,7 @@ class TeacherAuditListView(UserPassesTestMixin, ListView):
 
 class TeacherAuditUpdateView(UserPassesTestMixin, UpdateView):
     model = works
-    fields = ['audit_status', 'teacher_comment'] # 老師只能改這兩個欄位
+    fields = ['audit_status', 'teacher_comment']
     template_name = 'show/teacher_audit_form.html'
     success_url = reverse_lazy('teacher_audit_list')
 
