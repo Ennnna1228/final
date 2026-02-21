@@ -9,6 +9,13 @@ class works(models.Model):
     classes_id = models.IntegerField("課程編號編號",null=True, blank=True)#任課
     created_date = models.DateField("建立日期",auto_now_add = True)#自動填寫時間
     Certification = models.BooleanField("是否需要認證",default = False)#認證 T?F?
+    STATUS_CHOICES = [
+        ('pending', '待處理'),
+        ('approved', '同意'),
+        ('rejected', '不同意'),
+    ]
+    audit_status = models.CharField("審核狀態", max_length=10, choices=STATUS_CHOICES, default='pending')
+    teacher_comment = models.TextField("老師評論", blank=True, null=True)
     topic_id = models.IntegerField("上傳區域編號")#屬於哪個主題
 
     def __str__(self): 

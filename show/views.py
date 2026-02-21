@@ -1,16 +1,13 @@
 from django.shortcuts import render, redirect,get_object_or_404
-from django.views.generic import ListView,CreateView,DetailView
+from django.views.generic import ListView,CreateView,DetailView,UpdateView
 from .models import *
 from .urls import *
 from django.urls import reverse_lazy,reverse
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
-
+from django.contrib.auth.mixins import UserPassesTestMixin
 
 # Create your views here.
-class WorkList(ListView):
-    model = works
-
 class UpdateoptionList(ListView):
     model = updateoption
 
@@ -65,3 +62,23 @@ def register_view(request):
         form = CustomUserCreationForm()
         
     return render(request, 'register.html', {'form': form})
+
+class TeacherAuditListView(UserPassesTestMixin, ListView):
+    model = works
+    template_name = 'show/teacher_audit_list.html'
+    context_object_name = 'audit_works'
+
+    def test_func(self):
+        return self.request.user.is_staff
+
+    def get_queryset(self):
+        return works.objects.filter(Certification=True, audit_status='pending')
+
+class TeacherAuditUpdateView(UserPassesTestMixin, UpdateView):
+    model = works
+    fields = ['audit_status', 'teacher_comment'] # 老師只能改這兩個欄位
+    template_name = 'show/teacher_audit_form.html'
+    success_url = reverse_lazy('teacher_audit_list')
+
+    def test_func(self):
+        return self.request.user.is_staff
