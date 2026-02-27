@@ -57,6 +57,9 @@ def register_view(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
+            role = form.cleaned_data.get('role')
+            if role == 'teacher':
+                user.is_staff = True
             login(request, user)
             return redirect('updateoption_list')
     else:
